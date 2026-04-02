@@ -1,0 +1,6 @@
+yahooquery
+pandas
+numpy
+python-telegram-bot
+requests
+lxml
