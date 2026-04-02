@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phil Town Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-10">
+    <h1 class="text-3xl font-bold text-green-500 mb-6">Phil Town Rule #1 Local Scanner</h1>
+    <div id="cards" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+
+    <script>
+        fetch('data.json').then(r => r.json()).then(data => {
+            const container = document.getElementById('cards');
+            data.forEach(s => {
+                const isBuy = s.price <= s.mos;
+                container.innerHTML += `
+                    <div class="p-6 bg-gray-800 rounded-lg border ${isBuy ? 'border-green-500' : 'border-gray-700'}">
+                        <h2 class="text-2xl font-bold">${s.symbol}</h2>
+                        <p class="text-sm text-gray-400">Pret Actual: $${s.price}</p>
+                        <p class="text-green-400 font-bold">Sticker Price: $${s.sticker}</p>
+                        <p class="text-blue-400 font-bold text-xl">MoS (Buy): $${s.mos}</p>
+                        <hr class="my-3 border-gray-600">
+                        <p>Payback Time: ${s.payback} ani</p>
+                        <p>Debt Payoff: ${s.debt_y} ani</p>
+                        <div class="mt-4 text-center p-2 rounded ${isBuy ? 'bg-green-600' : 'bg-gray-700'}">
+                            ${isBuy ? '🔥 BUY SIGNAL' : 'WAIT'}
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
