@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # Containerul care face calculele Phil Town
+  scanner:
+    build: .
+    container_name: phil-scanner-task
+    volumes:
+      - .:/app
+    environment:
+      - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+    restart: "no"
+
+  # Serverul Web local (Nginx)
+  web:
+    image: nginx:alpine
+    container_name: phil-web-ui
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/usr/share/nginx/html
+    restart: always
