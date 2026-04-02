@@ -1,20 +1,21 @@
 version: '3.8'
 
 services:
-  # Containerul care ruleaza analiza
+  # Containerul care rulează analiza (Scanner-ul)
   scanner:
     build: .
     container_name: phil-scanner-task
     volumes:
       - stock_data:/app
+    # Nu am mai pus variabile de mediu aici deoarece sunt deja în scanner.py
     restart: "no"
 
-  # Containerul care afiseaza rezultatele (Interfata Web)
+  # Containerul pentru Interfața Web (Nginx)
   web:
     image: nginx:alpine
     container_name: phil-web-ui
     ports:
-      - "8080:80"
+      - "8072:80"  # Accesibil acum la http://localhost:8072
     volumes:
       - stock_data:/usr/share/nginx/html
     restart: always
